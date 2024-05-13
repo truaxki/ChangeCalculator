@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>Change Calculator</title>
     <!-- Favicon to represent the project visually in browser tabs -->
@@ -27,6 +28,19 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
             width: 300px; /* Fixed width for consistency */
         }
+
+/* The @ media is to create a sepperate container for mobile platforms.  */
+        @media (max-width: 600px) {
+            .container {
+                min-width: 95vw;  /* Increase width on smaller screens */
+                min-height: calc(95vw * (425 / 300));  /* Adjust min-height to maintain aspect ratio */
+                padding: 20px;  /* Reduce padding on smaller devices */
+                background-size: 100% 100%;  /* Scale height to 100%, width auto scales */
+                background-position: center;
+            }
+        }
+
+
 
         /* Styling for the main heading */
         h1 {
