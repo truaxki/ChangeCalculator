@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Change Calculator</title>
+    <!-- Favicon to represent the project visually in browser tabs -->
+    <link rel="icon" href="ChangeFavicon.png" type="image/png">
+    <style>
+        /* General body styles */
+        body {
+            font-family: 'Arial', sans-serif; /* Clean, sans-serif font for readability */
+            background-color: #f4f4f4; /* Light grey background for minimal eye strain */
+            /* margin: 0; Remove default margin */
+            /* padding: 20px; Padding around the content to avoid sticking to edges */
+            display: flex; /* Enables flexbox layout */
+            flex-direction: column;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            height: 100vh; /* Full view height */
+        }
+
+        /* Styling for the main calculator container */
+        #calculator {
+            background-color: #ffffff; /* White background for the calculator */
+            padding: 20px; /* Spacing inside the calculator */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+            width: 300px; /* Fixed width for consistency */
+        }
+
+        /* Styling for the main heading */
+        h1 {
+            color: #333; /* Dark grey color for the text */
+            text-align: center; /* Center-align the text */
+        }
+
+        /* Styling for input fields */
+        input[type="number"] {
+            width: calc(100% - 20px); /* Full width minus padding */
+            padding: 8px; /* Padding inside the input */
+            margin: 10px 0; /* Space above and below the input */
+            box-sizing: border-box; /* Include padding in width calculation */
+            border: 2px solid #ccc; /* Border for visual definition */
+            border-radius: 4px; /* Rounded borders */
+        }
+
+        body, input, button {
+            font-family: 'Arial', sans-serif; /* Ensures consistency in font usage */
+        }
+
+        span {
+            display: inline-block;
+            position: relative;
+        }
+
+        span::before {
+            content: "$"; /* Dollar sign before the input */
+            position: absolute;
+            left: 5px; /* Adjust this as needed */
+            top: 50%; /* Centers vertically */
+            transform: translateY(-50%);
+            font-size: 16px; /* Match your input font size */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 40px); /* Adjust width to include padding and dollar sign */
+            padding: 8px 20px 8px 20px; /* Padding inside the input */
+            margin: 10px 0; /* Space above and below the input */
+            box-sizing: border-box; /* Include padding in width calculation */
+            border: 2px solid #ccc; /* Border for visual definition */
+            border-radius: 4px; /* Rounded borders */
+            height: 40px; /* Ensures all inputs are of the same height */
+        }
+
+
+        /* Styling for the calculation button */
+        button {
+            width: 100%; /* Button occupies all horizontal space */
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text for contrast */
+            padding: 10px; /* Padding inside the button */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Larger text for readability */
+        }
+
+        /* Hover effect for the button */
+        button:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+        }
+
+        /* Layout for labels and their corresponding outputs */
+        .input-row {
+            display: flex;
+            align-items: center; /* Vertically align items in the middle */
+            justify-content: space-between; /* Distributes space between and around content items */
+            gap: 10px; /* Space between label and input */
+            margin-top: 10px;
+        }
+
+        .input-row label {
+            flex: 1; /* Allows the label to take up an equal amount of space as the input */
+            text-align: left; /* Keeps the text aligned to the right, close to the input */
+        }
+
+        .input-row span {
+            flex: 1; /* Allows the span (input container) to take up an equal amount of space as the label */
+            display: block;
+            position: relative;
+        }
+
+        .output-row {
+            display: flex; /* Flexbox layout to align label and value side by side */
+            align-items: center; /* Vertically align items in the middle */
+            margin-top: 10px; /* Top margin for spacing */
+        }
+
+        /* Styling for labels */
+        .output-row label {
+            flex: 1; /* Take up equal space */
+            margin-right: 10px; /* Space between label and output */
+        }
+
+        /* Styling for output paragraphs */
+        .output-row p {
+            flex: 1; /* Take up equal space */
+            color: #666; /* Medium grey text for output */
+            font-size: 16px; /* Readable font size */
+            margin: 0; /* Remove default margin */
+            padding: 8px; /* Padding for visual space */
+            background-color: #eee; /* Light grey background */
+            border-radius: 4px; /* Rounded corners for consistency */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h1>Change Calculator</h1>
+        
+        <div class="input-row">
+            <label for="amount-due">Amount-Due:</label>
+            <span><input id="amount-due" type="text" placeholder="0.00" title="Enter the total amount due"/></span> 
+        </div>  
+
+        <div class="input-row">
+            <label for="amount-received">Amount-Paid:</label>
+            <span><input id="amount-received" type="text" placeholder="0.00" title="Enter the amount received from customer"/></span>
+        </div>  
+
+        <button id="calculate-change">Calculate</button>
+
+        <div class="output-row">
+            <label for="dollars-output">Dollars:</label>
+            <p id="dollars-output" aria-live="assertive"></p>
+        </div>
+
+        <div class="output-row">
+            <label for="quarters-output">Quarters:</label>
+            <p id="quarters-output" aria-live="assertive"></p>
+        </div>
+
+        <div class="output-row">
+            <label for="dimes-output">Dimes:</label>
+            <p id="dimes-output" aria-live="assertive"></p>
+        </div>
+
+        <div class="output-row">
+            <label for="nickels-output">Nickels:</label>
+            <p id="nickels-output" aria-live="assertive"></p>
+        </div>
+
+        <div class="output-row">
+            <label for="pennies-output">Pennies:</label>
+            <p id="pennies-output" aria-live="assertive"></p>
+        </div>
+    </div>
+
+    <script src="main.js" charset="utf-8"></script>
+</body>
+</html>
